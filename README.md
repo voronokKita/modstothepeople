@@ -17,7 +17,8 @@ The script can be used for a cleanup, if you change set of mods then it removes 
 ## Detailed
 
 You'll need Python 3 installed. It comes with Ubuntu by default and can be included in other OS as well. Check in the terminal:
-> python3 --version<br>
+> python3 --version
+
 You can get it here https://www.python.org/downloads/<br>
 If you stuck then search "install python 3 in [your OS]", there are many detailed guides out there.
 
@@ -26,7 +27,8 @@ The script will definitely work on EU4 and HOI4, and probably on other games fro
 
 You install mods in the folder "Paradox Interactive" that will be created after the first lunch of a game. On Windows and Mac it will be created in your "Documents" folder, on Linux in ~/.local/share/ of your home catalog.<br>
 Normal order of mod installation in Europa Universalis IV by hands is this:
-> 0. Copy descriptor.mod, that normally found inside a mod folder, into catalog<br>
+
+0. Copy descriptor.mod, that normally found inside a mod folder, into catalog<br>
 /Paradox Interactive/Europa Universalis IV/mod/<br>
 1. in the end of this descriptor file add a new line:<br>
 path="path to the mod's folder"<br>
@@ -38,6 +40,7 @@ format of the file is this:<br>
 If this how it works in your case then the script must work regardless of OS and path to the "Paradox Interactive" folder!
 
 #### Send me a couple of coins for a bun please
+
 * PayPal: @kitavoronok
 * bank: https://www.tinkoff.ru/rm/shaipov.nikita1/M7Qf620463
 
