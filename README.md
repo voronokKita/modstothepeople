@@ -8,7 +8,7 @@ In those cases when Steam Workshop & game launcher aren't accessible mod's insta
 ### Here is how it works
 
 0. unpack your mods, give to the folders some simple names
-1. put the mods and the script into /Paradox Interactive/<your game folder>/mod/
+1. put the mods and the script into /Paradox Interactive/your game folder/mod/
 2. run terminal command python3 mttp.py
 3. enter your game version
 
