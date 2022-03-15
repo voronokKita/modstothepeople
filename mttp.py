@@ -1,10 +1,12 @@
 #! python3
 """ (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
 v1 winter 2022
-v2 spring 2022"""
+v2 spring 2022
+TODO remote id"""
 import re
 import sys
 import json
+import random
 import pathlib
 import collections
 
@@ -20,6 +22,7 @@ def main():
             print(f"Enter a game version in a format like 'python3 {sys.argv[0]} 3.2.1'")
             sys.exit(1)
         else:
+            global GAME_VERSION
             GAME_VERSION = sys.argv[1]
 
     try:
@@ -50,20 +53,31 @@ def paths_handler():
 
 
 def processing(mods_dirs):
-    "TODO thumbnails"
     mods_data = {}
     enabled_mods = []
     supported_version = f'supported_version="{GAME_VERSION}"'
     for mod_path in mods_dirs:
         name = f'name="{mod_path.stem}"'
         path = f'path="{mod_path}"'
+        thumbnail = get_picture(mod_path)
 
-        mods_data[mod_path] = f"{name}\n{supported_version}\n{path}\n"
+        mods_data[mod_path] = f"{name}\n{supported_version}\n{thumbnail}\n{path}\n"
 
         enabled_mods.append(f"mod/{mod_path.stem}.mod")
 
     json_data = {'disabled_dlcs': [], 'enabled_mods': enabled_mods}
     return mods_data, json_data
+
+
+def get_picture(mod_path):
+    thumbnail = ""
+    for item in mod_path.iterdir():
+        if item.is_file() and "thumbnail" in item.name:
+            thumbnail = item.name
+    if not thumbnail:
+        pics = [item.name for item in mod_path.iterdir() if item.name.endswith( ('.jpg', '.jpeg', '.png') )]
+        thumbnail = random.choice(pics) if len(pics) > 0 else ""
+    return f'picture="{thumbnail}"'
 
 
 def writer(mods_data, json_data, mods_dirs):
