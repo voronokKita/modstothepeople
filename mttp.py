@@ -25,7 +25,7 @@ def main():
     try:
         mods_dirs = paths_handler()
         mods_data, json_data = processing(mods_dirs)
-        writer(mods_data, json_data)
+        writer(mods_data, json_data, mods_dirs)
 
     except OSError:
         print("Error read/write data. Don't have permissions?")
@@ -38,7 +38,7 @@ def main():
 def paths_handler():
     print("directory:", MAIN_DIR)
 
-    mods_dirs = [item for item in MAIN_DIR.iterdir() if not item.is_file()]
+    mods_dirs = [item for item in MAIN_DIR.iterdir() if item.is_dir()]
     if len(mods_dirs) == 0:
         print("No mods found.")
         sys.exit(0)
@@ -66,9 +66,10 @@ def processing(mods_dirs):
     return mods_data, json_data
 
 
-def writer(mods_data, json_data):
-    "TODO cleanup"
+def writer(mods_data, json_data, mods_dirs):
     [item.unlink() for item in MAIN_DIR.iterdir() if item.name.endswith('.mod')]
+    for mod in mods_dirs:
+        [resource.rename(f"{resource}.old") for resource in mod.iterdir() if resource.name.endswith('.mod')]
 
     for mod in mods_data:
         descriptor_file = MAIN_DIR / f"{mod.stem}.mod"
