@@ -1,6 +1,7 @@
 #! python3
 """ (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
-v1 winter 2022 """
+v1 winter 2022
+v2 spring 2022"""
 import re
 import sys
 import json
@@ -8,70 +9,74 @@ import pathlib
 import collections
 
 PATTERN = re.compile(r'\d+\.\d+(\.\d+)?')
-Handler = collections.namedtuple("Handler", "mods_dirs, dlc_load, game_version")
+MAIN_DIR = pathlib.Path.cwd()
+DLC_LOAD = MAIN_DIR.parent / "dlc_load.json"
+GAME_VERSION = "*.*.*"
 
 
 def main():
+    if len(sys.argv) > 1:
+        if not PATTERN.fullmatch(sys.argv[1]):
+            print(f"Enter a game version in a format like 'python3 {sys.argv[0]} 3.2.1'")
+            sys.exit(1)
+        else:
+            GAME_VERSION = sys.argv[1]
+
     try:
-        handler = paths_handler()
-        mods, json_data = processing(handler)
-        writer(handler, mods, json_data)
+        mods_dirs = paths_handler()
+        mods_data, json_data = processing(mods_dirs)
+        writer(mods_data, json_data)
 
     except OSError:
         print("Error read/write data. Don't have permissions?")
-        sys.exit(1)
+        sys.exit(2)
     else:
         print("Done.")
         sys.exit(0)
 
 
 def paths_handler():
-    main_dir = pathlib.Path.cwd()
-    print("directory:", main_dir)
+    print("directory:", MAIN_DIR)
 
-    mods_dirs = [item for item in main_dir.iterdir() if not item.is_file()]
+    mods_dirs = [item for item in MAIN_DIR.iterdir() if not item.is_file()]
     if len(mods_dirs) == 0:
         print("No mods found.")
         sys.exit(0)
     else:
-        print(len(mods_dirs), "mods found")
+        print(len(mods_dirs), "mods found:")
         print(*[f"{item.stem}" for item in mods_dirs], sep=', ')
 
-    dlc_load = main_dir.parent / "dlc_load.json"
-
-    print("Enter game version | Введите версию игры:")
-    game_version = "None"
-    while not PATTERN.fullmatch(game_version):
-        game_version = input().strip()
-
-    return Handler(mods_dirs, dlc_load, game_version)
+    return mods_dirs
 
 
-def processing(datas):
-    mods = {}
-    mods_list = []
-    supported_version = f'supported_version="{datas.game_version}"'
-    for mod_path in datas.mods_dirs:
+def processing(mods_dirs):
+    "TODO thumbnails"
+    mods_data = {}
+    enabled_mods = []
+    supported_version = f'supported_version="{GAME_VERSION}"'
+    for mod_path in mods_dirs:
         name = f'name="{mod_path.stem}"'
         path = f'path="{mod_path}"'
-        mods[mod_path] = f"{name}\n{supported_version}\n{path}\n"
 
-        mods_list.append(f"mod/{mod_path.stem}.mod")
+        mods_data[mod_path] = f"{name}\n{supported_version}\n{path}\n"
 
-    json_data = {'disabled_dlcs': [], 'enabled_mods': mods_list}
-    return mods, json_data
+        enabled_mods.append(f"mod/{mod_path.stem}.mod")
+
+    json_data = {'disabled_dlcs': [], 'enabled_mods': enabled_mods}
+    return mods_data, json_data
 
 
-def writer(handler, mods, json_data):
-    [item.unlink() for item in pathlib.Path.cwd().iterdir() if item.name.endswith('.mod')]
+def writer(mods_data, json_data):
+    "TODO cleanup"
+    [item.unlink() for item in MAIN_DIR.iterdir() if item.name.endswith('.mod')]
 
-    for item in mods:
-        descriptor = pathlib.Path.cwd() / f"{item.stem}.mod"
-        with open(descriptor, 'w') as f:
-            f.write(mods[item])
+    for mod in mods_data:
+        descriptor_file = MAIN_DIR / f"{mod.stem}.mod"
+        with open(descriptor_file, 'w') as f:
+            f.write(mods_data[mod])
 
-    with open(handler.dlc_load, 'w') as f:
-            json.dump(json_data, f)
+    with open(DLC_LOAD, 'w') as f:
+        json.dump(json_data, f)
 
 
 if __name__ == '__main__':
