@@ -2,6 +2,8 @@
 
 ![picture](azusa.jpg "Azusa")
 
+###### ([руководство на русском](https://github.com/voronokKita/modstothepeople/blob/master/%D0%9F%D0%A0%D0%9E%D0%A7%D0%A2%D0%98%20%D0%9C%D0%95%D0%9D%D0%AF%20%D0%BD%D0%B0%20%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%BC.md))
+
 Paradox makes wonderful games, that become even better with help of mod-creators community.<br>
 In those cases when Steam Workshop isn't accessible, or you don't want to use it, mods installation becomes a boring monotonous job. This script will help you to transition from inefficient manual labor to machine-working.
 
