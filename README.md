@@ -12,7 +12,7 @@ In those cases when Steam Workshop isn't accessible, or you don't want to use it
 0. unpack your mods, (give to the folders some good names if you want)
 1. put the mods and the script into '/Documents/Paradox Interactive/your game folder/mod/'
 2. run in this filder a terminal command 'python3 mttp.py'
-3. or 'python3 mttp.py [your game version] to overwrite it'
+3. or 'python3 mttp.py [your game version]' to overwrite it
 
 If you change your set of mods then it'll cleanup old files & records.
 
@@ -30,7 +30,7 @@ The script will definitely work on EU4 and HOI4, and probably on other games fro
 > https://en.wikipedia.org/wiki/Paradox_Development_Studio#List_of_games_developed
 
 You install mods in the 'Paradox Interactive' folder, that will be created after the first lunch of a game. On Windows and Mac it will be created in your 'Documents' folder, on Linux in '~/.local/share/' of your home catalog.<br>
-Normal order of mod installation on Europa Universalis IV by hands is:
+Normal way to install mods in Europa Universalis IV by hands is:
 
 0. Copy descriptor.mod, that normally found inside a mod folder, into the<br>
 /Paradox Interactive/Europa Universalis IV/mod/<br>
