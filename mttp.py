@@ -92,8 +92,8 @@ def paths_handler():
 
 def processing(mods):
     enabled_mods = []
-    data = ""
     for mod in mods:
+        data = ""
         with open(mod.descriptor, 'r', encoding='utf-8') as file:
             for line in file:
                 if GAME_VERSION and "supported_version" in line:
