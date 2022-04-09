@@ -7,12 +7,14 @@ import re
 import sys
 import json
 import pathlib
+import argparse
 
 
 PATTERN = re.compile(r'\d+\.\d+(\.\d+)?')
 MAIN_DIR = pathlib.Path.cwd()
 DLC_LOAD = MAIN_DIR.parent / "dlc_load.json"
 GAME_VERSION = ""
+RENAME = False
 
 
 class Mod:
@@ -32,6 +34,15 @@ class Mod:
         return f"{self.name}"
 
 
+def game_version_pattern(line):
+    if not line:
+        return ""
+    elif not PATTERN.fullmatch(line):
+        raise argparse.ArgumentTypeError(f"\nEnter a game version in a format like 'python3 {sys.argv[0]} 3.2.1'")
+    else:
+        return line
+
+
 def main():
     if MAIN_DIR.parent.parent.stem != "Paradox Interactive":
         print("Run the script in the /Documents/Paradox Interactive/your game folder/mod/",
@@ -41,13 +52,18 @@ def main():
         if not answer in ["y", "yes"]:
             sys.exit(1)
 
-    elif len(sys.argv) > 1:
-        if not PATTERN.fullmatch(sys.argv[1]):
-            print(f"Enter a game version in a format like 'python3 {sys.argv[0]} 3.2.1'")
-            sys.exit(2)
-        else:
-            global GAME_VERSION
-            GAME_VERSION = f'supported_version="{sys.argv[1]}"'
+    parser = argparse.ArgumentParser()
+    parser.add_argument('version', nargs='?', default="", type=game_version_pattern,
+                        help="rewrite a game version")
+    parser.add_argument('-r', '--rename', action='store_true', default=False,
+                        help="rename mods to match their folders")
+    args = parser.parse_args()
+
+    global RENAME
+    RENAME = args.rename
+    if args.version:
+        global GAME_VERSION
+        GAME_VERSION = f'supported_version="{args.version}"'
 
     try:
         mods = paths_handler()
@@ -96,8 +112,10 @@ def processing(mods):
         data = ""
         with open(mod.descriptor, 'r', encoding='utf-8') as file:
             for line in file:
-                if GAME_VERSION and "supported_version" in line:
+                if GAME_VERSION and "supported_version=" in line:
                     line = GAME_VERSION + "\n"
+                elif RENAME and "name=" in line:
+                    line = f'name="{mod.name}"\n'
                 data += line
         data += f'\npath="{mod.folder}"\n'
         mod.data = data

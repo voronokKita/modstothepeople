@@ -11,8 +11,9 @@ In those cases when Steam Workshop isn't accessible, or you don't want to use it
 
 0. unpack your mods, (give to the folders some good names if you want)
 1. put the mods and the script into '/Documents/Paradox Interactive/your game folder/mod/'
-2. run in this filder a terminal command 'python3 mttp.py'
+2. run in this folder a terminal command 'python3 mttp.py'
 3. or 'python3 mttp.py [your game version]' to overwrite it
+4. you also may want to add flag -r to --rename mods, so that mod name will match its folders
 
 If you change your set of mods then it'll cleanup old files & records.
 
