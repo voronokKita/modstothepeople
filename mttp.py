@@ -60,13 +60,13 @@ def main(args):
 
     except OSError:
         print("Error read/write data. Don't have permissions?")
-        sys.exit(2)
+        sys.exit(1)
 
     except Exception:
         print('Unknown error occurred. Details:',
               '-' * 10, traceback.format_exc(), '-' * 10,
               "You may contact with me and I'll try to fix it!", sep='\n')
-        sys.exit(3)
+        sys.exit(2)
 
     else:
         print('Done.')
