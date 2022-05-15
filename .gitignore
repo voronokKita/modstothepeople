@@ -1,6 +1,7 @@
-/.directory
+.directory
+.idea
 .vscode
-/Paradox Interactive
+Paradox Interactive
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
