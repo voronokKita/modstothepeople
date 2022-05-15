@@ -1,4 +1,4 @@
-#! python3
+#!/usr/bin/env python
 """ (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧
 v1 january 2022
 v2 march 2022
@@ -11,13 +11,12 @@ import argparse
 import traceback
 
 
-
 MAIN_DIR = pathlib.Path.cwd()
 DLC_LOAD = MAIN_DIR.parent / 'dlc_load.json'
 GAME_VERSION = None
 RENAME = False
 VERSION = re.compile(r'\d+\.\d+(\.\d+)?')
-JSON_PATTERN = re.compile(r'(\[)(.*)(\])(.+)(enabled_mods)', re.DOTALL | re.I)  #?
+JSON_PATTERN = re.compile(r'(\[)(.*)(\])(.+)(enabled_mods)', re.DOTALL | re.I)
 
 class NoMods(Exception): pass
 
@@ -29,8 +28,8 @@ class Mod:
         self.data = data
 
     def save(self):
-        inner_desctiptor = self.folder / 'descriptor.mod'
-        with open(inner_desctiptor, 'w', encoding='utf-8') as file:
+        inner_descriptor = self.folder / 'descriptor.mod'
+        with open(inner_descriptor, 'w', encoding='utf-8') as file:
             file.write(self.data)
 
         outer_descriptor = self.folder.parent / f'{self.name}.mod'
@@ -87,7 +86,7 @@ def paths_handler():
                           if item.is_file() and item.name.endswith('.mod')]
 
         if not descriptor:
-            print(f"mod {directory.stem} doesn't have " \
+            print(f"mod {directory.stem} doesn't have "
                   "a descriptor file; skipped")
             continue
 
@@ -162,7 +161,7 @@ if __name__ == '__main__':
               'Continue anyway? [y/n]:', sep='\n', end=' ')
 
         answer = input().lower().strip()
-        if not answer in ['y', 'yes']:
+        if answer not in ['y', 'yes']:
             sys.exit(1)
 
     def game_version_pattern(line):
