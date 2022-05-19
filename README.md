@@ -4,16 +4,17 @@
 
 ###### ([руководство на русском](https://github.com/voronokKita/modstothepeople/blob/master/%D0%9F%D0%A0%D0%9E%D0%A7%D0%A2%D0%98%20%D0%9C%D0%95%D0%9D%D0%AF%20%D0%BD%D0%B0%20%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%BC.md))
 
-Paradox makes wonderful games, that become even better with help of mod-creators community.<br>
+Paradox makes wonderful games, that become even better with help of mod-creators community. <br>
 In those cases when Steam Workshop isn't accessible, or you don't want to use it, mods installation becomes a boring monotonous job. This script will help you to transition from inefficient manual labor to machine-working.
 
 ### Here is how it works
 
-0. unpack your mods, (give to the folders some good names if you want)
-1. put the mods and the script into '/Documents/Paradox Interactive/your game folder/mod/'
-2. run in this folder a terminal command 'python3 mttp.py'
-3. or 'python3 mttp.py [your game version]' to overwrite it
-4. you also may want to add flag -r to --rename mods, so that mod name will match its folders
+0. unpack your mods <br>
+   give to the folders some good names if you want, the script will also sort the mods in order
+2. put the mods and the script into '/Documents/Paradox Interactive/your game folder/mod/'
+3. run in this folder a terminal command 'python3 mttp.py' <br>
+   or 'python3 mttp.py [your game version]' to overwrite it <br>
+   you may also want to add flag -r to --rename mods, so that each mod's name will match its folder's name
 
 If you change your set of mods then it'll cleanup old files & records.
 
@@ -23,24 +24,25 @@ You'll need Python 3 installed. It comes with Ubuntu by default and can be inclu
 
 > python3 --version
 
-You can get it here https://www.python.org/downloads/<br>
+You can get it here https://www.python.org/downloads/ <br>
 If you stuck then search "install python 3 in [your OS]", there are many detailed guides out there.
 
 The script will definitely work on EU4 and HOI4, and probably on other games from this list:
 
 > https://en.wikipedia.org/wiki/Paradox_Development_Studio#List_of_games_developed
 
-You install mods in the 'Paradox Interactive' folder, that will be created after the first lunch of a game. On Windows and Mac it will be created in your 'Documents' folder, on Linux in '~/.local/share/' of your home catalog.<br>
-Normal way to install mods in Europa Universalis IV by hands is:
+You install mods in the 'Paradox Interactive' folder, that will be created after the first lunch of a game. On Windows and Mac it'll be created in your 'Documents' folder, on Linux in '~/.local/share/' of your home catalog.
 
-0. Copy descriptor.mod, that normally found inside a mod folder, into the<br>
-/Paradox Interactive/Europa Universalis IV/mod/<br>
-1. in the end of this descriptor file add a new line<br>
-path="path to the mod's folder"<br>
-2. Next you enable the mod by making/editing file<br>
-/Paradox Interactive/Europa Universalis IV/dlc_load.json<br>
-format of the file is this<br>
-{"disabled_dlcs" :[], "enabled_mods": ["mod/mod name 1.mod", "mod/mod name 2.mod", "mod/mod name 3.mod"]}
+Normal way to install mods in Europa Universalis IV by hands is this:
+
+0. Copy descriptor.mod, that normally found inside a mod folder, into the <br>
+   /Paradox Interactive/Europa Universalis IV/mod/ <br>
+1. in the end of this descriptor file add a new line <br>
+   path="path to the mod's folder" <br>
+2. Next you enable the mod by making/editing file <br>
+   /Paradox Interactive/Europa Universalis IV/dlc_load.json <br>
+   format of the file is this <br>
+   {"disabled_dlcs" :[], "enabled_mods": ["mod/mod name 1.mod", "mod/mod name 2.mod", "mod/mod name 3.mod"]}
 
 If this how it works in your case then the script must work, regardless of your OS and a path to the 'Paradox Interactive' folder!
 
